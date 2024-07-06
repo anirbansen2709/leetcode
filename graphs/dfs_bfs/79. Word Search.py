@@ -31,5 +31,5 @@ class Solution:
                     return True
         return False
 
-#TC - O(n * m * k)
+#TC - O(n * m * 4 ^ l)
 # SC - O(n * m)
