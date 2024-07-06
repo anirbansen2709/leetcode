@@ -29,5 +29,5 @@ class Solution:
         self.get_combinations(0, answer, path)
         return answer
 
-# TC - O(length * m)
-# SC - O(m)
+# TC - O(4 ^ N)
+# SC - O(4 ^ N)
