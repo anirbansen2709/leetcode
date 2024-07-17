@@ -21,3 +21,6 @@ class Solution:
 
         answer = max(distance.values())
         return answer if answer != float(inf) else -1
+
+# TC - O(V + ElogV)
+# SC - O(V + E)
