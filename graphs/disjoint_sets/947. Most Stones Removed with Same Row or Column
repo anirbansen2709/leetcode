@@ -42,3 +42,5 @@ class Solution:
             if disjoint_set.find_parent(node) == node:
                 count_uls += 1
         return len(stones) - count_uls
+# TC - O(S * alpha (max_row + max_col))
+# SC - O(max_row + max_col)
