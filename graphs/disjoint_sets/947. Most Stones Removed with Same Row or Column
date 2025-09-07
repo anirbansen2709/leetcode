@@ -1,0 +1,44 @@
+class DisjointSet:
+    def __init__(self, size):
+        self.sizes = [1 for _ in range(size + 1)]
+        self.parents = [idx for idx in range(size + 1)]
+    def find_parent(self, node):
+        # parent of itself
+        if node == self.parents[node]:
+            return node
+        # fine ultimate parent
+        self.parents[node] = self.find_parent(self.parents[node])
+        return self.parents[node]
+    def union_by_size(self, first, second):
+        ul_first = self.find_parent(first)
+        ul_second = self.find_parent(second)
+        if ul_first == ul_second:
+            # do nothing
+            return
+        if self.sizes[ul_first] > self.sizes[ul_second]:
+            self.parents[ul_second] = ul_first
+            self.sizes[ul_first] += self.sizes[ul_second]
+        else:
+            self.parents[ul_first] = ul_second
+            self.sizes[ul_second] += self.sizes[ul_first]
+
+class Solution:
+    def removeStones(self, stones: List[List[int]]) -> int:
+        max_row = 0
+        max_col = 0
+        nodes = set()
+        for row, col in stones:
+            max_row = max(max_row, row)
+            max_col = max(max_col, col)
+        disjoint_set = DisjointSet(max_row + max_col + 1)
+        for row, col in stones:
+            node_row = row
+            node_col = col + max_row + 1
+            disjoint_set.union_by_size(node_row, node_col)
+            nodes.add(node_row)
+            nodes.add(node_col)
+        count_uls = 0
+        for node in nodes:
+            if disjoint_set.find_parent(node) == node:
+                count_uls += 1
+        return len(stones) - count_uls
