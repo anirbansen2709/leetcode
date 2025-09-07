@@ -18,16 +18,21 @@ class Solution:
 
 class Solution:
     def get_max_amount(self, idx, nums, dp):
-        if idx >= len(nums):
+        if idx < 0 :
             return 0
-        if dp[idx] != float('inf'):
+        if idx == 0:
+            return nums[0]
+        if dp[idx] != -1:
             return dp[idx]
-        dp[idx] = max(nums[idx] + self.get_max_amount(idx + 2, nums, dp), self.get_max_amount(idx + 1, nums, dp))
+        rob = nums[idx] + self.get_max_amount(idx - 2, nums, dp)
+        skip = self.get_max_amount(idx - 1, nums, dp)
+        dp[idx] = max(rob, skip)
         return dp[idx]
 
     def rob(self, nums: List[int]) -> int:
-        dp = [float('inf') for _ in range(len(nums) + 1)]
-        return self.get_max_amount(0, nums, dp)
+        length = len(nums)
+        dp = [-1 for _ in range(length + 1)]
+        return self.get_max_amount(length - 1, nums, dp)
 
 # TC - O(n)
 # SC - O(n)
