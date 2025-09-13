@@ -1,3 +1,6 @@
+# Brute Force
+# Try all possible combinations - TC - O(n ^ 4)
+
 class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
         length = len(nums)
