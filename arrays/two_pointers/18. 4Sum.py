@@ -1,5 +1,5 @@
 # Brute Force
-# Try all possible combinations - TC - O(n ^ 4)
+# Try all possible combinations - TC - O(n ^ 4), SC - O(# of quads)
 
 class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
@@ -30,4 +30,4 @@ class Solution:
         return answer
 
 # TC - O(n ** 3)
-# SC - O(1)
+# SC - O(num quads)
