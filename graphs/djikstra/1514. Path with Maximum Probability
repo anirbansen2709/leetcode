@@ -1,0 +1,27 @@
+from collections import defaultdict
+
+class Solution:
+    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start_node: int, end_node: int) -> float:
+        adj_list = defaultdict(list)
+        for (start, end), prob in zip(edges, succProb):
+            adj_list[start].append((prob, end))
+            adj_list[end].append((prob, start))
+        
+        pq = [(-1.0, start_node)]
+
+        max_probs = [0 for _ in range(n)]
+        max_probs[start] = 1.0
+
+        while pq:
+            prob, node = heapq.heappop(pq)
+            prob = -prob
+            for neigh_prob, neigh_node in adj_list[node]:
+                total_prob = prob * neigh_prob
+                if total_prob > max_probs[neigh_node]:
+                    max_probs[neigh_node] = total_prob
+                    heapq.heappush(pq, (-total_prob, neigh_node))
+
+        return max_probs[end_node]
+
+# TC - O(ELogV)
+# SC - O(V + E)
