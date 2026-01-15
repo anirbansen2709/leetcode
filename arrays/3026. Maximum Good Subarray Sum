@@ -1,0 +1,25 @@
+class Solution:
+    def maximumSubarraySum(self, nums: List[int], k: int) -> int:
+        cur_prefix_sum = 0
+        max_sum = float(-inf)
+        min_prefix_map = {}
+        found = False
+        for idx, num in enumerate(nums):
+            # updating the prefix sum
+            cur_prefix_sum += num
+            # nums[i] = num -+ k
+            for target in [num - k, num + k]:
+                if target in min_prefix_map:
+                    found = True
+                    # sum = current_total_sum - prefix_sum_just_before_target
+                    max_sum = max(max_sum, cur_prefix_sum - min_prefix_map[target])
+            # update the min_prefix_map with this num if not exists yet 
+            # if exists compare with cur prefix before num (as nums[i] is included in sum)
+            # and assign if smaller
+            prefix_before_num = cur_prefix_sum - num
+            if num not in min_prefix_map or min_prefix_map[num] > prefix_before_num:
+                min_prefix_map[num] = prefix_before_num
+        return max_sum if found else 0
+
+# TC - O(n)
+# SC - O(n)
