@@ -1,3 +1,8 @@
+# You have a graph of n nodes. You are given an integer n and an array edges where edges[i] = [aᵢ, bᵢ] indicates that there is an edge 
+# between aᵢ and bᵢ in the graph. Return the number of connected components in the graph.
+
+# 
+
 class DisjointSet:
     def __init__(self, nodes):
         self.size = [1 for _ in range(nodes + 1)]
@@ -31,3 +36,6 @@ class Solution:
                 count += 1
 
         return count
+
+# TC - O(V + E)
+# SC - O(V)
