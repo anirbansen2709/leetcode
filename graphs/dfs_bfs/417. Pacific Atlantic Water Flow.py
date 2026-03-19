@@ -52,3 +52,6 @@ class Solution:
                 if visited[row][col] == [1, 1]:
                     answer.append((row, col))
         return answer
+
+# TC - O(m x n)
+# SC - O(m x n)
