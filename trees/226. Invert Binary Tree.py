@@ -31,4 +31,4 @@ class Solution:
         return self.traverse(root)
 
 # TC - O(n)
-# SC - O(logn)
+# SC - O(n) - skewed 
