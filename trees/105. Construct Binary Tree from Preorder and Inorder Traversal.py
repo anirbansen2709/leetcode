@@ -1,3 +1,14 @@
+# Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the 
+# binary tree.
+
+# The algorithm uses the properties of Preorder (Root, Left, Right) and Inorder (Left, Root, Right) traversals to recursively build the tree:
+# First Create a hash map (inorder_map) that stores the value-to-index mappings of the inorder array.
+# Find the Root: The first element of the current preorder segment is always the root of the current subtree.
+# Find the Subtrees: By locating that root value in the inorder array, everything to its left belongs to the left subtree, and 
+# everything to its right belongs to the right subtree. 
+# Recursion: The build_tree helper function recursively calculates the exact array boundaries (pre_start, pre_end, in_start, in_end) 
+# for the left and right subtrees and attaches them to the current root.
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
