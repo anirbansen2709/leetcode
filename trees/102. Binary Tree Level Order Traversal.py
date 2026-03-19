@@ -1,3 +1,11 @@
+# Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+# Breadth-First Search (BFS): It uses a deque (queue) to process nodes layer by layer, starting from the root.
+# Track Levels: The queue stores pairs of (node, current_level) to keep track of the depth of each node.
+# Group by Level: As it pops a node, it checks if a sublist for its level exists in the answer array (using len(answer) == level). 
+# If not, it creates a new empty sublist. It then appends the node's value to the latest sublist.
+# Enqueue Children: It adds the left and right children (if they exist) to the queue, incrementing their level by 1.
+
 from collections import deque
 # Definition for a binary tree node.
 # class TreeNode:
