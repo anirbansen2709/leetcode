@@ -62,3 +62,5 @@ class Solution:
 
         return "".join(res)
 
+# TC - O(total number of chars)
+# SC - O(1)
