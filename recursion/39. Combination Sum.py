@@ -39,5 +39,5 @@ class Solution:
         self.get_sum(0, path, answer, candidates, target)
         return answer
 
-# TC - O(k * 2 ^ t) where k = avg length 
-# SC - O(k * x)
+# TC - O(2 ^ t/m) where t = target, m = min value  
+# SC - O(t/m)
