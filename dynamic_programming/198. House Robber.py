@@ -36,28 +36,31 @@ class Solution:
 # SC - O(n)
 
 # Memoization
-# create a dp array filled with -1 with size length
-# if dp[idx] != -1: return dp[idx]. This is the core logic: if you've already calculated the max money for this specific idx before, 
-# immediately return the saved answer instead of doing more recursion.
-# Instead of just returning max(rob, skip), you first save it into your cache: dp[idx] = max(rob, skip) and then return dp[idx].
+# The Setup: Create a dp array of size length, filled with -1s, to act as our cache.
+# The Cache Check (Core Logic): Before doing any heavy recursion, check if dp[idx] != -1. 
+# If it isn't -1, we've already calculated the max money for this specific index. 
+# We immediately return the saved answer to prevent redundant recursive calls.
+# Saving the State: Instead of just returning max(skip, rob) at the end, we first save the 
+# calculated best outcome into our cache (dp[idx] = max(skip, rob)) and then return it.
 
 class Solution:
-    def get_max_amount(self, idx, nums, dp):
-        if idx < 0 :
+    def get_max(self, idx, dp):
+        if idx == self.length:
             return 0
-        if idx == 0:
-            return nums[0]
+        if idx ==  self.length - 1:
+            return self.nums[idx]
         if dp[idx] != -1:
             return dp[idx]
-        rob = nums[idx] + self.get_max_amount(idx - 2, nums, dp)
-        skip = self.get_max_amount(idx - 1, nums, dp)
-        dp[idx] = max(rob, skip)
+        skip = self.get_max(idx + 1, dp)
+        rob = self.nums[idx] + self.get_max(idx + 2, dp)
+        dp[idx] = max(skip, rob)
         return dp[idx]
 
     def rob(self, nums: List[int]) -> int:
-        length = len(nums)
-        dp = [-1 for _ in range(length + 1)]
-        return self.get_max_amount(length - 1, nums, dp)
+        self.nums = nums
+        self.length = len(self.nums)
+        dp = [-1 for _ in range(self.length)]
+        return self.get_max(0, dp)
 
 # TC - O(n)
 # SC - O(2n)
