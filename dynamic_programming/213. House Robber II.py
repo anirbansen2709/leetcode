@@ -3,6 +3,20 @@
 # were broken into on the same night.
 # Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
 
+# Recursive
+class Solution:
+    def get_max(self, idx, nums):
+        if idx >= len(nums):
+            return 0
+        rob = nums[idx] + self.get_max(idx+2, nums)
+        skip = self.get_max(idx+1, nums)
+        return max(rob, skip)
+    def rob(self, nums: List[int]) -> int:
+        skip_first = self.get_max(0, nums[1:])
+        skip_last = self.get_max(0, nums[:-1])
+        return max(skip_first, skip_last)
+
+#Memoization
 class Solution:
     def get_max_amount(self, idx, nums, dp):
         if idx >= len(nums):
