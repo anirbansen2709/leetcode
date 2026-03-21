@@ -12,23 +12,31 @@ class Solution:
         skip = self.get_max(idx+1, nums)
         return max(rob, skip)
     def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
         skip_first = self.get_max(0, nums[1:])
         skip_last = self.get_max(0, nums[:-1])
         return max(skip_first, skip_last)
 
 #Memoization
 class Solution:
-    def get_max_amount(self, idx, nums, dp):
+    def get_max(self, idx, nums, dp):
         if idx >= len(nums):
             return 0
-        if dp[idx] != float('inf'):
+        if dp[idx] != -1:
             return dp[idx]
-        dp[idx] = max(nums[idx] + self.get_max_amount(idx + 2, nums, dp), self.get_max_amount(idx + 1, nums, dp))
+        rob = nums[idx] + self.get_max(idx+2, nums, dp)
+        skip = self.get_max(idx+1, nums, dp)
+        dp[idx] = max(rob, skip)
         return dp[idx]
-
+        
     def rob(self, nums: List[int]) -> int:
-        dp = [float('inf') for _ in range(len(nums))]
-        return max(self.get_max_amount(0, nums[1:], dp), self.get_max_amount(0, nums[:-1], dp))
+        if len(nums) == 1:
+            return nums[0]
+        dp = [-1 for _ in range(len(nums))]
+        skip_first = self.get_max(0, nums[1:], list(dp))
+        skip_last = self.get_max(0, nums[:-1], list(dp))
+        return max(skip_first, skip_last)
 
 
 # TC - O(n)
