@@ -3,29 +3,34 @@
 # Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
 
 # Recursion Solution
-# starts evaluating from the last house in the array (length - 1) and works its way backward to the first house (0).
-# The Setup: Inside rob, you find the length of the array and immediately call get_max_amount starting at the very last index.
-# Base Cases: * if idx < 0: If you go out of bounds (which happens when you try to step back 2 houses from index 0 or 1), you return 0
-# because there are no houses there.
-# if idx == 0: If you reach the very first house, the maximum money you can get is just the money in that house (nums[0]).
-# The Choices: For the current house at idx, you calculate two possibilities: rob: You take the money at nums[idx], and add it to the
-# result of a recursive call that skips the adjacent house and goes to idx - 2.
-# skip: You don't take the money at nums[idx], and instead just take whatever the maximum amount was up to the previous house at idx - 1.
-# The Result: You return max(rob, skip), passing the best outcome back up the chain.
+# Direction: Starts evaluating from the first house in the array (index 0) and works its way forward to the end of the array.
+# The Setup: Inside rob, you store the array and its length as class variables (self.nums and self.length), and then immediately call 
+# get_max starting at the very first index (0).
+# Base Cases: * if idx == self.length: If you go out of bounds (past the last house), you return 0 because there are no more houses 
+# left to rob.
+# if idx == self.length - 1: If you reach the very last house, the maximum money you can get from this point forward is just the money
+# in that specific house (self.nums[idx]).
+# The Choices: For the current house at idx, you calculate two possibilities:
+# skip: You don't take the money at the current house, and instead see what the maximum amount is if you just move to the very next
+# house at idx + 1.
+# rob: You take the money at the current house (self.nums[idx]), and add it to the result of a recursive call that skips the adjacent 
+# house and jumps ahead to idx + 2.
+# The Result: You return max(skip, rob), passing the best outcome back up the chain.
 
 class Solution:
-    def get_max_amount(self, idx, nums):
-        if idx < 0 :
+    def get_max(self, idx):
+        if idx == self.length:
             return 0
-        if idx == 0:
-            return nums[0]
-        rob = nums[idx] + self.get_max_amount(idx - 2, nums)
-        skip = self.get_max_amount(idx - 1, nums)
-        return max(rob, skip)
+        if idx ==  self.length - 1:
+            return self.nums[idx]
+        skip = self.get_max(idx + 1)
+        rob = self.nums[idx] + self.get_max(idx + 2)
+        return max(skip, rob)
 
     def rob(self, nums: List[int]) -> int:
-        length = len(nums)
-        return self.get_max_amount(length - 1, nums)
+        self.nums = nums
+        self.length = len(self.nums)
+        return self.get_max(0)
 
 # TC - O(2^n)
 # SC - O(n)
